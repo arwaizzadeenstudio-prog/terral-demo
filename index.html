@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TERRAL — Restaurant &amp; Café (Demo)</title>
+<style>
+:root{--olive:#3b4a2f;--olive2:#2c3823;--cream:#f6f0e2;--ivory:#fbf8f0;--esp:#2e1f17;--gold:#a8884a;--bg:var(--ivory);--tx:var(--esp);--card:#fff;--line:#e4dac3;--mut:#6b5d52;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1a14;--tx:#f1e9d6;--card:#272217;--line:#3d3626;--mut:#b8ab93;--gold:#c9a864;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d1a14;--tx:#f1e9d6;--card:#272217;--line:#3d3626;--mut:#b8ab93;--gold:#c9a864;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3,.serif{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:.01em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+section{padding:84px 0}
+.eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+h2{font-size:clamp(1.9rem,4vw,2.6rem);margin:0 0 14px;line-height:1.2}
+.btn{display:inline-block;border:1px solid var(--gold);background:transparent;color:inherit;padding:13px 26px;font:inherit;font-size:.95rem;letter-spacing:.06em;cursor:pointer;text-decoration:none;transition:.25s}
+.btn.pri{background:var(--gold);color:#1d1a14;border-color:var(--gold)}
+.btn:hover{transform:translateY(-1px);background:var(--gold);color:#1d1a14}
+.btn.pri:hover{background:#c9a864}
+header{position:sticky;top:0;z-index:20;background:var(--olive2);color:var(--cream);padding-top:env(safe-area-inset-top,0px)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:Georgia,serif;letter-spacing:.34em;font-size:1.25rem;text-decoration:none}
+nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0}
+nav a{text-decoration:none;font-size:.9rem;letter-spacing:.08em;padding:6px 0;border-bottom:1px solid transparent}
+nav a:hover{border-color:var(--gold)}
+.hd-r{display:flex;gap:10px;align-items:center}
+.iconbtn{background:none;border:1px solid rgba(246,240,226,.35);color:var(--cream);padding:8px 14px;font:inherit;font-size:.85rem;cursor:pointer}
+#burger{display:none}
+@media(max-width:760px){#burger{display:block}nav{position:absolute;left:0;right:0;top:100%;background:var(--olive2);display:none;padding:10px 22px 20px}nav.open{display:block}nav ul{flex-direction:column;gap:14px}}
+.hero{background:var(--olive);color:var(--cream);padding:0}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;min-height:min(86vh,720px);padding-top:56px;padding-bottom:56px}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);letter-spacing:.3em;margin:0;line-height:1.1}
+.hero .sub{letter-spacing:.2em;text-transform:uppercase;font-size:.78rem;color:#d3bd8a;margin:6px 0 26px}
+.hero .tag{font-family:Georgia,serif;font-style:italic;font-size:1.5rem;margin:0 0 14px;color:#d3bd8a}
+.hero p.i{max-width:46ch;opacity:.92;margin:0 0 30px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero .btn{color:var(--cream)}
+.hero .btn.pri{color:#1d1a14}
+.art{aspect-ratio:4/5;border:1px solid rgba(211,189,138,.5);padding:12px}
+.art svg,.thumb svg{width:100%;height:100%;display:block}
+.ph{font-size:.7rem;opacity:.7;margin-top:8px;letter-spacing:.06em}
+@media(max-width:860px){.hero .wrap{grid-template-columns:1fr;min-height:0}.art{aspect-ratio:16/10;order:-1}}
+.tools{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:26px 0}
+.tools input{flex:1;min-width:200px;padding:12px 14px;background:var(--card);border:1px solid var(--line);color:var(--tx);font:inherit}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:8px 16px;border:1px solid var(--line);background:none;color:var(--tx);font:inherit;font-size:.88rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--olive);color:var(--cream);border-color:var(--olive)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px}
+.item{background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;transition:.25s}
+.item:hover{box-shadow:0 10px 26px rgba(46,31,23,.12)}
+.thumb{aspect-ratio:4/3;cursor:pointer;background:none;border:0;padding:0;display:block;width:100%}
+.item .b{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.item h3{margin:0;font-size:1.15rem;display:flex;justify-content:space-between;gap:10px}
+.item p{margin:0;color:var(--mut);font-size:.92rem;flex:1}
+.item .r{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.link{background:none;border:0;color:var(--gold);cursor:pointer;font:inherit;text-decoration:underline;padding:4px 0}
+.empty{color:var(--mut);padding:30px 0}
+.note{font-size:.82rem;color:var(--mut);margin-top:22px}
+#reserve{background:var(--cream);color:var(--esp)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) #reserve{background:#231f17;color:var(--tx)}}
+:root[data-theme="dark"] #reserve{background:#231f17;color:var(--tx)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+@media(max-width:860px){.two{grid-template-columns:1fr;gap:30px}}
+form{display:grid;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+label{display:grid;gap:5px;font-size:.88rem}
+input,select,textarea{padding:12px;border:1px solid var(--line);background:var(--card);color:var(--tx);font:inherit;width:100%}
+.err{color:#b3261e;font-size:.8rem;min-height:1em}
+@media(prefers-color-scheme:dark){.err{color:#ff9a90}}
+.warn{border-left:3px solid var(--gold);padding:10px 14px;background:rgba(168,136,74,.12);font-size:.88rem;margin:16px 0 0}
+footer{background:var(--esp);color:#e8dfca;padding:64px 0 28px}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:34px}
+footer h3{font-size:1rem;letter-spacing:.14em;color:#d3bd8a;margin:0 0 10px}
+footer p,footer li{margin:4px 0;font-size:.92rem}
+footer ul{list-style:none;padding:0;margin:0}
+.ph-t{color:#d3bd8a}
+.small{font-size:.78rem;opacity:.7;margin-top:34px}
+dialog{border:1px solid var(--line);background:var(--card);color:var(--tx);max-width:460px;width:calc(100% - 32px);padding:0}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+dialog .d{padding:22px;display:grid;gap:12px}
+#cartfab{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:15;background:var(--olive);color:var(--cream);border:1px solid var(--gold);padding:14px 22px;font:inherit;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--card);color:var(--tx);z-index:30;transform:translateX(105%);transition:transform .3s;display:flex;flex-direction:column;border-left:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+#drawer.open{transform:none}
+#drawer .h{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+#drawer .bd{flex:1;overflow:auto;padding:16px 20px;display:grid;gap:12px;align-content:start}
+#drawer .ft{padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:grid;gap:10px}
+.ci{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:10px;font-size:.92rem}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:30px;height:30px;border:1px solid var(--line);background:none;color:var(--tx);cursor:pointer;font-size:1rem}
+.tot{display:flex;justify-content:space-between;font-family:Georgia,serif;font-size:1.2rem}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <a class="logo" href="#home" aria-label="TERRAL home">TERRAL</a>
+  <nav id="nav" aria-label="Main"><ul>
+   <li><a href="#home">Home</a></li><li><a href="#menu">Menu</a></li><li><a href="#reserve">Reservations</a></li><li><a href="#contact">Contact</a></li>
+  </ul></nav>
+  <div class="hd-r"><button class="iconbtn" id="burger" aria-expanded="false" aria-controls="nav">Menu ☰</button></div>
+ </div>
+</header>
+
+<main id="home">
+<section class="hero" style="padding:0">
+ <div class="wrap">
+  <div>
+   <h1>TERRAL</h1>
+   <p class="sub">Restaurant &amp; Café</p>
+   <p class="tag">Good Food. Better Moments.</p>
+   <p class="i">Sun-warmed Mediterranean cooking, slow coffee and a table that waits for you. Order for pickup over WhatsApp, or ask us to hold a table.</p>
+   <div class="cta">
+    <a class="btn pri" href="#reserve">Reserve a Table</a>
+    <a class="btn" href="#menu">Order via WhatsApp</a>
+   </div>
+  </div>
+  <div><div class="art" id="heroArt" role="img" aria-label="Illustration of a plated dish (photo placeholder)"></div><p class="ph">Illustration placeholder — swap in the client's real photography.</p></div>
+ </div>
+</section>
+
+<section id="menu"><div class="wrap">
+ <p class="eyebrow">The Menu</p><h2>Seasonal plates &amp; slow coffee</h2>
+ <p style="color:var(--mut);margin:0">Demo menu — fictional dishes and prices. Add dishes, then check out through WhatsApp.</p>
+ <div class="tools">
+  <input id="q" type="search" placeholder="Search dishes by name" aria-label="Search dishes by name">
+  <div class="chips" id="chips" role="group" aria-label="Categories"></div>
+ </div>
+ <div class="grid" id="grid" aria-live="polite"></div>
+</div></section>
+
+<section id="reserve"><div class="wrap two">
+ <div>
+  <p class="eyebrow">Reservations</p><h2>Request a table</h2>
+  <p>Tell us when you'd like to visit. We'll receive your request on WhatsApp and reply to confirm.</p>
+  <p class="warn"><strong>This is a request, not a booking.</strong> Your table is not confirmed until the restaurant replies. There is no live availability — this demo has no backend.</p>
+ </div>
+ <form id="rf" novalidate>
+  <label>Name <input id="rn" autocomplete="name" required><span class="err" id="e-rn"></span></label>
+  <label>Phone <input id="rp" type="tel" autocomplete="tel" placeholder="+000 000 0000" required><span class="err" id="e-rp"></span></label>
+  <div class="row">
+   <label>Date <input id="rd" type="date" required><span class="err" id="e-rd"></span></label>
+   <label>Preferred time <select id="rt" required><option value="">Select</option></select><span class="err" id="e-rt"></span></label>
+  </div>
+  <label>Guests <select id="rg"></select></label>
+  <label>Special requests (optional) <textarea id="rs" rows="3" maxlength="300"></textarea></label>
+  <button class="btn pri" type="submit">Send request on WhatsApp</button>
+  <p class="note" id="rnote" style="margin:0"></p>
+ </form>
+</div></section>
+</main>
+
+<footer id="contact"><div class="wrap">
+ <div class="cols">
+  <div><h3>TERRAL</h3><p>Good Food. Better Moments.</p><p class="ph-t">Demo website for a fictional restaurant.</p></div>
+  <div><h3>VISIT</h3><p class="ph-t">[PLACEHOLDER: Street address, City]</p><p><a href="https://www.google.com/maps/search/?api=1&amp;query=restaurant" target="_blank" rel="noopener">Directions (placeholder map link)</a></p></div>
+  <div><h3>HOURS</h3><ul class="ph-t"><li>[PLACEHOLDER: Mon–Fri hours]</li><li>[PLACEHOLDER: Sat–Sun hours]</li></ul></div>
+  <div><h3>CONTACT</h3><p class="ph-t">Phone: [PLACEHOLDER]</p><p><a href="#" id="wa-foot">WhatsApp us</a></p><p><a href="#" data-soc>Instagram</a> · <a href="#" data-soc>Facebook</a> <span class="ph-t">(placeholders)</span></p></div>
+ </div>
+ <p class="small">All details are placeholders. Designed as a showcase by Arwa Studio.</p>
+</div></footer>
+
+<button id="cartfab" aria-label="Open order">Your order · <span id="cc">0</span></button>
+<aside id="drawer" aria-label="Your order" aria-hidden="true">
+ <div class="h"><h3 style="margin:0;font-size:1.3rem">Your order</h3><button class="link" id="cx">Close</button></div>
+ <div class="bd" id="cb"></div>
+ <div class="ft">
+  <div class="tot"><span>Total</span><span id="ct">$0.00</span></div>
+  <label>Your name <input id="on" autocomplete="name"></label>
+  <label>Pickup or delivery address <input id="oa" placeholder="Pickup, or delivery address"></label>
+  <label>Notes (optional) <input id="oo"></label>
+  <span class="err" id="e-o"></span>
+  <button class="btn pri" id="co">Checkout on WhatsApp</button>
+  <p class="note" style="margin:0">Opens WhatsApp with your order pre-filled. No payment is taken and the order is not confirmed until the restaurant replies.</p>
+ </div>
+</aside>
+<dialog id="dlg"><div class="d" id="dd"></div></dialog>
+
+<script>
+(function(){
+// ===== CONFIG =====
+var WA_NUMBER="000000000000"; // PLACEHOLDER: digits only, country code first, no + (e.g. 15551234567)
+var CUR="$";
+var MENU=[
+{id:1,n:"Whipped Feta & Honey",c:"Starters",p:9,d:"Whipped sheep's feta, thyme honey, toasted sesame, warm flatbread.",h:80},
+{id:2,n:"Charred Octopus",c:"Starters",p:16,d:"Grilled octopus, smoked paprika, lemon, crushed potatoes.",h:15},
+{id:3,n:"Heirloom Tomato Salad",c:"Starters",p:11,d:"Summer tomatoes, red onion, capers, olive oil, oregano.",h:5},
+{id:4,n:"Lamb Kofta",c:"Mains",p:21,d:"Spiced lamb skewers, garlic yogurt, pickled onion, herbed rice.",h:20},
+{id:5,n:"Saffron Seafood Risotto",c:"Mains",p:24,d:"Prawns, mussels, saffron broth, fennel, lemon zest.",h:40},
+{id:6,n:"Roasted Sea Bream",c:"Mains",p:26,d:"Whole-roasted fish, olive & caper salsa, charred greens.",h:200},
+{id:7,n:"Wild Mushroom Orzo",c:"Mains",p:18,d:"Creamy orzo, mushrooms, parmesan, parsley oil. Vegetarian.",h:30},
+{id:8,n:"Orange Blossom Cake",c:"Desserts",p:8,d:"Olive oil sponge, orange blossom syrup, pistachio.",h:25},
+{id:9,n:"Honey Baklava",c:"Desserts",p:7,d:"Layered filo, walnuts, cinnamon, golden syrup.",h:45},
+{id:10,n:"Flat White",c:"Café",p:4,d:"Double ristretto, silky steamed milk.",h:28},
+{id:11,n:"Cardamom Coffee",c:"Café",p:4.5,d:"Slow-brewed coffee spiced with cardamom.",h:25},
+{id:12,n:"Fresh Mint Lemonade",c:"Café",p:5,d:"Pressed lemon, garden mint, light sugar.",h:70}];
+var CATS=["All","Starters","Mains","Desserts","Café"];
+var cart={},cat="All",term="";
+function $(i){return document.getElementById(i)}
+function money(v){return CUR+v.toFixed(2)}
+function art(h,big){return '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="300" fill="hsl('+h+',25%,'+(big?'24%':'86%')+')"/><circle cx="200" cy="150" r="108" fill="hsl('+h+',20%,96%)" stroke="#a8884a" stroke-width="2"/><circle cx="200" cy="150" r="74" fill="hsl('+h+',45%,55%)"/><circle cx="170" cy="130" r="22" fill="hsl('+(h+30)+',50%,62%)"/><circle cx="228" cy="170" r="26" fill="hsl('+(h+60)+',40%,45%)"/><circle cx="214" cy="118" r="12" fill="hsl('+(h+90)+',45%,60%)"/><circle cx="168" cy="178" r="10" fill="#f6f0e2"/></svg>'}
+$("heroArt").innerHTML=art(75,true);
+
+// ===== NAV =====
+var nav=$("nav"),bg=$("burger");
+bg.onclick=function(){var o=nav.classList.toggle("open");bg.setAttribute("aria-expanded",o)};
+nav.addEventListener("click",function(e){if(e.target.tagName==="A"){nav.classList.remove("open");bg.setAttribute("aria-expanded","false")}});
+document.querySelectorAll("[data-soc]").forEach(function(a){a.onclick=function(e){e.preventDefault()}});
+
+// ===== MENU =====
+function chips(){$("chips").innerHTML=CATS.map(function(c){return '<button class="chip" aria-pressed="'+(c===cat)+'" data-c="'+c+'">'+c+'</button>'}).join("")}
+$("chips").onclick=function(e){var c=e.target.getAttribute("data-c");if(c){cat=c;chips();render()}};
+$("q").oninput=function(){term=this.value.trim().toLowerCase();render()};
+function render(){
+ var list=MENU.filter(function(m){return (cat==="All"||m.c===cat)&&m.n.toLowerCase().indexOf(term)>-1});
+ $("grid").innerHTML=list.length?list.map(function(m){return '<article class="item"><button class="thumb" data-v="'+m.id+'" aria-label="Details for '+m.n+'">'+art(m.h)+'</button><div class="b"><h3><span>'+m.n+'</span><span>'+money(m.p)+'</span></h3><p>'+m.d+'</p><div class="r"><button class="link" data-v="'+m.id+'">Details</button><button class="btn" data-a="'+m.id+'">Add to order</button></div></div></article>'}).join(""):'<p class="empty">No dishes match your search.</p>';
+}
+$("grid").onclick=function(e){var t=e.target.closest("[data-a],[data-v]");if(!t)return;if(t.hasAttribute("data-a"))add(+t.getAttribute("data-a"));else details(+t.getAttribute("data-v"))};
+function details(id){var m=MENU.filter(function(x){return x.id===id})[0];$("dd").innerHTML='<div style="aspect-ratio:4/3">'+art(m.h)+'</div><h3 style="margin:0;font-size:1.4rem">'+m.n+'</h3><p style="margin:0;color:var(--mut)">'+m.c+' · '+money(m.p)+'</p><p style="margin:0">'+m.d+'</p><p class="note" style="margin:0">Demo item. Illustration placeholder.</p><div style="display:flex;gap:10px"><button class="btn pri" id="da">Add to order</button><button class="btn" id="dc">Close</button></div>';
+ $("da").onclick=function(){add(id);$("dlg").close()};$("dc").onclick=function(){$("dlg").close()};$("dlg").showModal()}
+
+// ===== CART =====
+function add(id){cart[id]=(cart[id]||0)+1;draw();$("cartfab").textContent="Added ✓";setTimeout(draw,700)}
+function draw(){
+ var ids=Object.keys(cart),n=0,t=0;
+ $("cb").innerHTML=ids.length?ids.map(function(i){var m=MENU.filter(function(x){return x.id==i})[0],q=cart[i];n+=q;t+=q*m.p;return '<div class="ci"><div><strong>'+m.n+'</strong><br><span style="color:var(--mut)">'+money(m.p)+' each</span></div><div class="qty"><button data-d="'+i+'" aria-label="Decrease '+m.n+'">−</button><span aria-live="polite">'+q+'</span><button data-i="'+i+'" aria-label="Increase '+m.n+'">+</button><button data-r="'+i+'" aria-label="Remove '+m.n+'" title="Remove">✕</button></div></div>'}).join(""):'<p class="empty">Your order is empty. Add dishes from the menu.</p>';
+ $("ct").textContent=money(t);$("cartfab").innerHTML='Your order · <span id="cc">'+n+'</span>';
+}
+$("cb").onclick=function(e){var b=e.target.closest("button");if(!b)return;var d=b.dataset;
+ if(d.i)cart[d.i]++;else if(d.d){if(--cart[d.d]<1)delete cart[d.d]}else if(d.r)delete cart[d.r];draw()};
+function drawer(o){$("drawer").classList.toggle("open",o);$("drawer").setAttribute("aria-hidden",!o);if(o)$("cx").focus();else $("cartfab").focus()}
+$("cartfab").onclick=function(){drawer(true)};$("cx").onclick=function(){drawer(false)};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")drawer(false)});
+function wa(text){return "https://wa.me/"+(WA_NUMBER.replace(/\D/g,"").replace(/^0+$/,""))+"?text="+encodeURIComponent(text)}
+function open_(url){var w=window.open(url,"_blank","noopener");if(!w)location.href=url}
+$("wa-foot").onclick=function(e){e.preventDefault();open_(wa("Hello TERRAL, I have a question."))};
+$("co").onclick=function(){
+ var ids=Object.keys(cart);
+ if(!ids.length){$("e-o").textContent="Add at least one dish first.";return}
+ var nm=$("on").value.trim(),ad=$("oa").value.trim();
+ if(!nm||!ad){$("e-o").textContent="Please enter your name and pickup/delivery details.";return}
+ $("e-o").textContent="";var t=0;
+ var lines=ids.map(function(i){var m=MENU.filter(function(x){return x.id==i})[0],q=cart[i];t+=q*m.p;return q+" x "+m.n+" - "+money(q*m.p)});
+ var msg="Hello TERRAL, I'd like to place an order:\n\n"+lines.join("\n")+"\n\nTotal: "+money(t)+"\nName: "+nm+"\nPickup/Delivery: "+ad+($("oo").value.trim()?"\nNotes: "+$("oo").value.trim():"")+"\n\n(Please confirm availability and final total.)";
+ open_(wa(msg));
+};
+
+// ===== RESERVATION =====
+var tm=$("rt");for(var h=12;h<=22;h++)["00","30"].forEach(function(mm){if(h===22&&mm==="30")return;var v=("0"+h).slice(-2)+":"+mm;tm.add(new Option(v,v))});
+var gs=$("rg");for(var g=1;g<=12;g++)gs.add(new Option(g+(g===1?" guest":" guests"),g));gs.value=2;
+function ymd(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+var today=new Date();$("rd").min=ymd(today);var mx=new Date();mx.setDate(mx.getDate()+90);$("rd").max=ymd(mx);
+$("rf").addEventListener("submit",function(e){
+ e.preventDefault();var ok=true;
+ function er(i,m){$("e-"+i).textContent=m;if(m)ok=false}
+ var n=$("rn").value.trim(),p=$("rp").value.trim(),d=$("rd").value,t=$("rt").value,digits=p.replace(/\D/g,"");
+ er("rn",n.length<2?"Please enter your name.":"");
+ er("rp",!/^[+\d\s()-]+$/.test(p)||digits.length<7||digits.length>15?"Enter a valid phone number (7–15 digits).":"");
+ var dm="";if(!d)dm="Choose a date.";else if(d<ymd(new Date()))dm="Date cannot be in the past.";else if(d>$("rd").max)dm="Please choose a date within 90 days.";
+ er("rd",dm);
+ var tmsg="";if(!t)tmsg="Choose a time.";else if(d===ymd(new Date())){var nw=new Date();if(t<("0"+nw.getHours()).slice(-2)+":"+("0"+nw.getMinutes()).slice(-2))tmsg="That time has already passed today."}
+ er("rt",tmsg);
+ if(!ok){var f=document.querySelector(".err:not(:empty)");if(f&&f.previousElementSibling)f.previousElementSibling.focus();return}
+ var msg="Hello TERRAL, I'd like to request a table:\n\nName: "+n+"\nPhone: "+p+"\nDate: "+d+"\nTime: "+t+"\nGuests: "+gs.value+($("rs").value.trim()?"\nSpecial requests: "+$("rs").value.trim():"")+"\n\n(Reservation request - please confirm availability.)";
+ open_(wa(msg));
+ $("rnote").textContent="WhatsApp should now be open with your request. Please press Send there. Your table is NOT confirmed until we reply.";
+});
+chips();render();draw();
+if(/^0*$/.test(WA_NUMBER.replace(/\D/g,""))){document.querySelectorAll(".note")[0];$("rnote").textContent="Demo notice: no restaurant number is configured, so WhatsApp will let you pick a contact."}
+})();
+</script>
+</body>
+</html>
